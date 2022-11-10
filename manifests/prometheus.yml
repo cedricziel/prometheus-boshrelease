@@ -37,6 +37,11 @@ instance_groups:
         release: prometheus
         properties:
           prometheus:
+            remote_write:
+              - url: ((grafana_cloud_remote_write_url))
+                basic_auth:
+                  username: ((grafana_cloud_user))
+                  password: ((grafana_cloud_apikey))
             rule_files:
               - /var/vcap/jobs/postgres_alerts/*.alerts.yml
               - /var/vcap/jobs/prometheus_alerts/*.alerts.yml
@@ -152,6 +157,10 @@ variables:
   - name: grafana_password
     type: password
   - name: grafana_secret_key
+    type: password
+  - name: grafana_cloud_remote_write_url
+  - name: grafana_cloud_user
+  - name: grafana_cloud_apikey
     type: password
 
 update:
